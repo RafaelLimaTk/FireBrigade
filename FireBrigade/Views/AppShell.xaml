@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FireBrigade.Views.AppShell"
+    xmlns:loginPage="clr-namespace:FireBrigade.Views.Login"
+    Shell.FlyoutBehavior="Disabled"
+    Title="FireBrigade">
+
+    <TabBar>
+        <ShellContent
+        Title="fireBrigade"
+        ContentTemplate="{DataTemplate loginPage:LoginPage}"
+        Icon="document.png"
+        Route="login" />
+    </TabBar>
+</Shell>
