@@ -14,7 +14,7 @@ public class UserBrigadeRepository : IUserBrigadeRepository
 
     public async Task<UserBrigade> GetByUser(string email, string password)
         => await _fireBrigadeContext.Users
-            .FirstOrDefaultAsync(user => user.Email == email && user.Password == password)
+            .FirstOrDefaultAsync(user => user.Email == email.ToLower() && user.Password == password.ToLower())
             ?? throw new Exception("Usuário não encontrado.");
 
     public async Task Create(UserBrigade userBrigade)

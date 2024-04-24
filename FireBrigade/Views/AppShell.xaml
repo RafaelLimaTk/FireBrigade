@@ -9,7 +9,7 @@
 
     <TabBar>
         <ShellContent
-        Title="fireBrigade"
+        Title="Home"
         ContentTemplate="{DataTemplate loginPage:LoginPage}"
         Icon="document.png"
         Route="login" />

@@ -19,20 +19,20 @@ public partial class LoginViewModel : ObservableObject
     public LoginViewModel()
     {
         _userBrigadeRepository = App.Current.Handler.MauiContext.Services.GetService<IUserBrigadeRepository>();
+    } 
+
+    [RelayCommand]
+    public async Task Login()
+    {
+        var user = await _userBrigadeRepository.GetByUser(email, password);
+        if (user is null) return;
+
+        await Shell.Current.GoToAsync("home");
     }
 
     [RelayCommand]
-    public async void Save()
+    public async Task GoToRegister()
     {
-        var createUser = new UserBrigade(email, password);
-        if (!createUser.IsValid()) return;
-
-        //await _userBrigadeRepository.Create(createUser);
-        GetUser(email, password);
-    }
-
-    public async void GetUser(string email, string password)
-    {
-        var teste = await _userBrigadeRepository.GetByUser(email, password);
+        await Shell.Current.GoToAsync("register");
     }
 }
