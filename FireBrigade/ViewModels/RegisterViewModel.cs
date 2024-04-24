@@ -25,18 +25,28 @@ public partial class RegisterViewModel : ObservableObject
     [RelayCommand]
     public async Task Register()
     {
+        var currentPageErro = Shell.Current.CurrentPage;
         if (password != confirmPassword)
         {
-            var currentPageErro = Shell.Current.CurrentPage;
             await currentPageErro.DisplayAlert("Erro",
                                               $"As senhas não conferem", "Ok");
             return;
         }
 
-        var createUser = new UserBrigade(email.ToLower(), password.ToLower());
+        var createUser = new UserBrigade(
+            email?.ToLower() ?? string.Empty,
+            password?.ToLower() ?? string.Empty);
+
+        var validationResult = new UserValidator().Validate(createUser);
+        if (!validationResult.IsValid)
+        {
+            var errors = string.Join("\n", validationResult.Errors.Select(e => e.ErrorMessage));
+            await currentPageErro.DisplayAlert("Erro de Validação", errors, "Ok");
+            return;
+        }
+
         if (!createUser.IsValid())
         {
-            var currentPageErro = Shell.Current.CurrentPage;
             await currentPageErro.DisplayAlert("Erro",
                                $"Preencha todos os campos", "Ok");
 

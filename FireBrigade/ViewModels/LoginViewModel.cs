@@ -24,6 +24,13 @@ public partial class LoginViewModel : ObservableObject
     [RelayCommand]
     public async Task Login()
     {
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            var currentPageErro = Shell.Current.CurrentPage;
+            await currentPageErro.DisplayAlert("Erro", "Preencha todos os campos", "Ok");
+            return;
+        }
+
         var user = await _userBrigadeRepository.GetByUser(email, password);
         if (user is null) return;
 
