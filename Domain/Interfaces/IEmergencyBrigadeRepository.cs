@@ -5,7 +5,7 @@ namespace FireBrigade.Domain.Interfaces;
 public interface IEmergencyBrigadeRepository
 {
     Task<EmergencyBrigade> GetById(Guid id);
-    Task<IEnumerable<EmergencyBrigade>> GetAll();
+    IEnumerable<EmergencyBrigade> GetAll();
     Task Create(EmergencyBrigade emergencyBrigade);
     Task<EmergencyBrigade> Update(EmergencyBrigade emergencyBrigade);
     Task Delete(EmergencyBrigade emergencyBrigade);

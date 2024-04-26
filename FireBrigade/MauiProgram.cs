@@ -14,6 +14,7 @@ namespace FireBrigade
             var builder = MauiApp.CreateBuilder();
 
             builder.Services.AddSingleton<IUserBrigadeRepository, UserBrigadeRepository>();
+            builder.Services.AddSingleton<IEmergencyBrigadeRepository, EmergencyBrigadeRepository>();
 
             builder
                 .UseMauiApp<App>()

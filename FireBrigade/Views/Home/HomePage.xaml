@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FireBrigade.ViewModels"
              x:Class="FireBrigade.Views.Home.HomePage"
              Title="HomePage">
+
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel />
+    </ContentPage.BindingContext>
+    
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="Bem vindo ao Brigada de Emergência" FontSize="Title" 
+               HorizontalTextAlignment="Center" />
+        <Label Text="Esta é a página inicial do aplicativo" 
+               HorizontalTextAlignment="Center" />
+
+        <Grid Padding="20" RowSpacing="10" ColumnSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Column="0" Grid.Row="1" Spacing="10">
+                <Label Text="Cadastro de Módulos" 
+                       HorizontalTextAlignment="Center"/>
+                <Button Text="Brigada de emergência"
+                    BackgroundColor="#D32F2F"
+                    TextColor="White"
+                    CornerRadius="5"
+                    Command="{Binding NavigateToBrigadeEmergencyPageCommand}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
+                <Label Text="Visualizar Módulos" 
+                       HorizontalTextAlignment="Center"/>
+                <Button Text="Lista de Brigada de emergência"
+                    BackgroundColor="#D32F2F"
+                    TextColor="White"
+                    CornerRadius="5" 
+                    Command="{Binding NavigateToListBrigadeEmergencyPageCommand}"/>
+            </StackLayout>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
