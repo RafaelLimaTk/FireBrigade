@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FireBrigade.ViewModels"
              x:Class="FireBrigade.Views.BrigadeEmergency.BrigadeEmergencyPage"
              Title="BrigadeEmergencyPage">
+
+    <ContentPage.BindingContext>
+        <vm:BrigadeEmergencyViewModel />
+    </ContentPage.BindingContext>
+
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="10">
 
@@ -18,32 +24,37 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <SearchBar Grid.Column="1" 
-                           Placeholder="Pesquisar..."
-                           VerticalOptions="Center" />
-
                 <Frame Grid.Column="0" 
                        WidthRequest="120" HeightRequest="120" 
                        CornerRadius="60" 
                        HorizontalOptions="Start" 
                        VerticalOptions="Center"
-                       BorderColor="Black"
-                       Margin="0,0,10,0">
-                    <ImageButton Source="sua_imagem.png" 
-                                 BackgroundColor="Transparent" 
-                                 Aspect="AspectFill" />
+                       BorderColor="{StaticResource Primary}"
+                       BackgroundColor="Transparent" 
+                       Margin="0,0,10,0"
+                       HasShadow="True"
+                       Padding="0">
+                    <ImageButton Source="{Binding ImagePath}" 
+                         BackgroundColor="Transparent" 
+                         Aspect="AspectFill" 
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         Command="{Binding SelectImageCommand}" />
                 </Frame>
             </Grid>
 
-            <Entry Placeholder="Polo" />
-            <Entry Placeholder="Endereço" />
-            <Entry Placeholder="Nome" />
-            <Entry Placeholder="Função" />
-            <Entry Placeholder="Setor" />
-            <Entry Placeholder="Contato" />
+            <Entry Placeholder="Polo" Text="{Binding Pole}"/>
+            <Entry Placeholder="Endereço" Text="{Binding Address}"/>
+            <Entry Placeholder="Nome" Text="{Binding Name}"/>
+            <Picker ItemsSource="{Binding Functions}"
+                    SelectedItem="{Binding SelectedFunction}"
+                    Title="Selecione uma função"
+                    HorizontalOptions="FillAndExpand" />
+            <Entry Placeholder="Setor" Text="{Binding Sector}"/>
+            <Entry Placeholder="Contato" Text="{Binding PhoneNumber}"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="30">
-                <Button Text="Salvar" BackgroundColor="Green" TextColor="White"/>
+                <Button Text="Salvar" BackgroundColor="Green" TextColor="White" Command="{Binding SaveEmergencyBrigadeCommand}"/>
                 <Button Text="Editar" BackgroundColor="Blue" TextColor="White"/>
                 <Button Text="Excluir" BackgroundColor="Red" TextColor="White"/>
             </StackLayout>

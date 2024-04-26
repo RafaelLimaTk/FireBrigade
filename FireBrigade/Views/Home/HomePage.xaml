@@ -39,11 +39,11 @@
             <StackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
                 <Label Text="Visualizar Módulos" 
                        HorizontalTextAlignment="Center"/>
-                <Button Text="Brigada de emergência"
+                <Button Text="Lista de Brigada de emergência"
                     BackgroundColor="#D32F2F"
                     TextColor="White"
-                    CornerRadius="5"
-                    Command="{Binding AcessarCommand}"/>
+                    CornerRadius="5" 
+                    Command="{Binding NavigateToListBrigadeEmergencyPageCommand}"/>
             </StackLayout>
         </Grid>
     </VerticalStackLayout>

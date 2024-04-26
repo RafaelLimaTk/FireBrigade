@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FireBrigade.ViewModels"
+             x:Class="FireBrigade.Views.BrigadeEmergency.ListBrigadeEmergencyPage"
+             Title="ListBrigadeEmergencyPage">
+
+    <ContentPage.BindingContext>
+        <vm:ListBrigadeEmergencyViewModel />
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <Grid Padding="20" RowDefinitions="50, *" >
+            <SearchBar x:Name="Search" 
+                        SearchCommand="{Binding PerformSearch}"
+                        Placeholder="Pesquise aqui..."
+                        SearchCommandParameter="{Binding Text, Source={x:Reference Search}}"/>
+
+            <CollectionView Grid.Row="1"  ItemsSource="{Binding EmergencyBrigadeFilter}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Name}" 
+                            FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -13,9 +13,9 @@ namespace FireBrigade.Infra.Data.Repositories
         {
             _fireBrigadeContext = fireBrigadeContext;
         }
-        public async Task<IEnumerable<EmergencyBrigade>> GetAll()
+        public IEnumerable<EmergencyBrigade> GetAll()
         {
-            return await _fireBrigadeContext.EmergencyBrigades.ToListAsync();
+            return _fireBrigadeContext.EmergencyBrigades;
         }
 
         public async Task<EmergencyBrigade> GetById(Guid id)
