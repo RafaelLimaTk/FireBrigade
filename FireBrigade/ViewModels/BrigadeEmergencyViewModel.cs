@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FireBrigade.Domain.Entities;
 using FireBrigade.Domain.Interfaces;
 using System.ComponentModel.Design;
@@ -7,7 +8,7 @@ using System.Diagnostics;
 
 namespace FireBrigade.ViewModels;
 
-[QueryProperty(nameof(BrigadeEmergencyId), "brigadeEmergency")]
+[QueryProperty(nameof(BrigadeEmergencyId), "brigadeEmergencyId")]
 public partial class BrigadeEmergencyViewModel : ObservableObject
 {
     [ObservableProperty]
@@ -81,6 +82,15 @@ public partial class BrigadeEmergencyViewModel : ObservableObject
     }
 
     [RelayCommand]
+    public async Task SaveAndEdit()
+    {
+        if (IsEditMode)
+            await UpdateEmergencyBrigade(Guid.Parse(BrigadeEmergencyId));
+        else
+            await SaveEmergencyBrigade();
+    }
+
+    [RelayCommand]
     public async Task SaveEmergencyBrigade()
     {
         Function function = Enum.Parse<Function>(SelectedFunction);
@@ -98,18 +108,46 @@ public partial class BrigadeEmergencyViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task DeleteEmergencyBrigade(EmergencyBrigade emergencyBrigade)
+    public async Task DeleteEmergencyBrigade(Guid emergencyBrigadeId)
     {
-        await _emergencyBrigadeRepository.Delete(emergencyBrigade);
-        await Shell.Current.CurrentPage.DisplayAlert("Sucesso", "Brigada de emergência deletada com sucesso", "Ok");
+
+        var currentPage = Shell.Current.CurrentPage;
+        bool isConfirmed = await currentPage.DisplayAlert("Confirmação de exclusão",
+            $"Tem certeza que deseja excluir permanentemente o brigadista {name}? Esta ação não pode ser desfeita.", "Excluir", "Cancelar");
+        if (isConfirmed)
+        {
+            var emergencyBrigade = await GetEmergencyBrigade(emergencyBrigadeId);
+            await _emergencyBrigadeRepository.Delete(emergencyBrigade);
+            await Shell.Current.CurrentPage.DisplayAlert("Sucesso", "Brigada de emergência deletada com sucesso", "Ok");
+        }
     }
 
     [RelayCommand]
-    public async Task UpdateEmergencyBrigade(EmergencyBrigade emergencyBrigade)
+    public async Task UpdateEmergencyBrigade(Guid emergencyBrigadeId)
     {
+        var emergencyBrigade = await GetEmergencyBrigade(emergencyBrigadeId);
+        emergencyBrigade = MapperEmergencyBrigade(emergencyBrigade);
+
         await _emergencyBrigadeRepository.Update(emergencyBrigade);
         await Shell.Current.CurrentPage.DisplayAlert("Sucesso", "Brigada de emergência atualizada com sucesso", "Ok");
+        await NavigateToListBrigadeEmergencyPage();
     }
+
+    private EmergencyBrigade MapperEmergencyBrigade(EmergencyBrigade emergencyBrigade)
+    {
+        emergencyBrigade.Name = Name;
+        emergencyBrigade.Pole = Pole;
+        emergencyBrigade.Address = Address;
+        emergencyBrigade.Sector = Sector;
+        emergencyBrigade.PhoneNumber = PhoneNumber;
+        emergencyBrigade.ImageProfile = ImagePath;
+        emergencyBrigade.Function = Enum.Parse<Function>(SelectedFunction);
+
+        return emergencyBrigade;
+    }
+
+    private async Task<EmergencyBrigade> GetEmergencyBrigade(Guid emergencyBrigadeId)
+        => await _emergencyBrigadeRepository.GetById(emergencyBrigadeId);
 
     [RelayCommand]
     public async Task SelectImage()

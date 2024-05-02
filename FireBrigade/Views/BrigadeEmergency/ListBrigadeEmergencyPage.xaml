@@ -2,14 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FireBrigade.ViewModels"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="FireBrigade.Views.BrigadeEmergency.ListBrigadeEmergencyPage"
+             x:Name="ListBrigadeEmergency"
              Title="ListBrigadeEmergencyPage">
 
     <ContentPage.BindingContext>
         <vm:ListBrigadeEmergencyViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>    
 
-    <ScrollView>
+    <!--<ScrollView>
         <Grid Padding="20" RowDefinitions="Auto, *">
             <SearchBar x:Name="Search" 
                        BackgroundColor="#333333"
@@ -39,5 +41,53 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
+    </ScrollView>-->
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundColor}" Padding="50" Spacing="10">
+            <Grid RowDefinitions="Auto, *" RowSpacing="45">
+                <Border BackgroundColor="{StaticResource White}" Stroke="{StaticResource Primary}" StrokeThickness="1" StrokeShape="RoundRectangle 50">
+                    <SearchBar x:Name="Search" 
+                           TextColor="Black"
+                           PlaceholderColor="Black"
+                           Placeholder="Pesquisar..."
+                           Margin="20,0,0,0"
+                           HeightRequest="60"
+                           Text="{Binding TextSearch}">
+                        <SearchBar.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding PerformSearchCommand}" />
+                        </SearchBar.Behaviors>
+                    </SearchBar>
+                </Border>
+
+                <CollectionView Grid.Row="1" ItemsSource="{Binding EmergencyBrigadeFilter}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="auto, 15">
+                                <Frame BackgroundColor="{StaticResource White}" BorderColor="Transparent" Padding="0" CornerRadius="10" HasShadow="True">
+                                    <Grid Padding="15" RowDefinitions="Auto" ColumnDefinitions="150, *, 200">
+                                        <Image Source="{Binding ImageProfile}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100"/>
+                                        <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="5" Padding="10,5">
+                                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}"/>
+                                            <StackLayout Orientation="Vertical" Spacing="10">
+                                                <Label Text="{Binding Function}" FontSize="14" TextColor="{StaticResource Black}"/>
+                                                <Label Text="{Binding PhoneNumber}" FontSize="14" TextColor="{StaticResource Black}"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="5" Padding="10,5">
+                                            <HorizontalStackLayout Padding="20, 0">
+                                                <Button Text="Editar" ImageSource="pencilsquare.png" Background="Transparent" Command="{Binding BindingContext.EditEmergencyBrigadeCommand, Source={x:Reference ListBrigadeEmergency}}" CommandParameter="{Binding .}"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Padding="20, 0">
+                                                <Button Text="Excluir" ImageSource="trashfill.png" Background="Transparent" Command="{Binding BindingContext.DeleteEmergencyBrigadeCommand, Source={x:Reference ListBrigadeEmergency}}" CommandParameter="{Binding .}"/>
+                                            </HorizontalStackLayout>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -57,8 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\pencilsquare.svg" />
 	  <None Remove="Resources\Images\personfilladd.svg" />
 	  <None Remove="Resources\Images\personsquare.svg" />
+	  <None Remove="Resources\Images\trashfill.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
