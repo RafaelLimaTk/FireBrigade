@@ -8,21 +8,33 @@
     <ContentPage.BindingContext>
         <vm:ListBrigadeEmergencyViewModel />
     </ContentPage.BindingContext>
-    
-    <ScrollView>
-        <Grid Padding="20" RowDefinitions="50, *" >
-            <SearchBar x:Name="Search" 
-                        SearchCommand="{Binding PerformSearch}"
-                        Placeholder="Pesquise aqui..."
-                        SearchCommandParameter="{Binding Text, Source={x:Reference Search}}"/>
 
-            <CollectionView Grid.Row="1"  ItemsSource="{Binding EmergencyBrigadeFilter}">
+    <ScrollView>
+        <Grid Padding="20" RowDefinitions="Auto, *">
+            <SearchBar x:Name="Search" 
+                       BackgroundColor="#333333"
+                       TextColor="White"
+                       PlaceholderColor="Gray"
+                       Placeholder="Pesquise membros da brigada..."
+                       Margin="0,0,0,20"
+                       SearchCommand="{Binding PerformSearch}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference Search}}"/>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding EmergencyBrigadeFilter}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <VerticalStackLayout Padding="10">
-                            <Label Text="{Binding Name}" 
-                            FontAttributes="Bold"/>
-                        </VerticalStackLayout>
+                        <Frame BackgroundColor="#333333" Margin="5" Padding="0" CornerRadius="10" HasShadow="True">
+                            <Grid Padding="15" RowDefinitions="Auto" ColumnDefinitions="100, *">
+                                <Image Source="{Binding ImageProfile}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100"/>
+                                <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="5" Padding="10,5">
+                                    <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                                    <StackLayout Orientation="Horizontal" Spacing="10">
+                                        <Label Text="{Binding Function}" FontSize="14" TextColor="LightGray"/>
+                                        <Label Text="{Binding PhoneNumber}" FontSize="14" TextColor="LightGray"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:FireBrigade.ViewModels"
              x:Class="FireBrigade.Views.BrigadeEmergency.BrigadeEmergencyPage"
              Title="BrigadeEmergencyPage">
@@ -9,7 +10,7 @@
         <vm:BrigadeEmergencyViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView>
+    <!--<ScrollView>
         <VerticalStackLayout Padding="30" Spacing="10">
 
             <Label Text="CADASTRO BRIGADA DE EMERGÊNCIA"
@@ -59,5 +60,77 @@
                 <Button Text="Excluir" BackgroundColor="Red" TextColor="White"/>
             </StackLayout>
         </VerticalStackLayout>
+    </ScrollView>-->
+
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="{StaticResource BackgroundColor}" Padding="50" Spacing="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Cadastro de Brigadista"
+                   TextColor="{StaticResource Black}"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+
+                <Button Text="Ver todos os brigadista"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource White}"
+                    Command="{Binding NavigateToListBrigadeEmergencyPageCommand}"
+                    Padding="15"
+                    FontSize="20"
+                    CornerRadius="30"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End" />
+            </Grid>
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="1" 
+                       WidthRequest="220" HeightRequest="220" 
+                       CornerRadius="110"
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       BorderColor="{StaticResource Primary}"
+                       BackgroundColor="{StaticResource White}" 
+                       Margin="0,0,10,0"
+                       HasShadow="True"
+                       Padding="0">
+                    <ImageButton Source="{Binding ImagePath}"
+                             BackgroundColor="Transparent"
+                             Aspect="AspectFill"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"
+                             Command="{Binding SelectImageCommand}" />
+                </Frame>
+            </Grid>
+            <Entry Placeholder="Nome" Text="{Binding Name}" TextColor="{StaticResource Black}" BackgroundColor="{StaticResource White}" Margin="0,10,0,0" HeightRequest="50"/>
+            <Entry Placeholder="Setor" Text="{Binding Sector}" TextColor="{StaticResource Black}" BackgroundColor="{StaticResource White}" Margin="0,10,0,0" HeightRequest="50"/>
+            <Entry Placeholder="Telefone" Text="{Binding PhoneNumber}" TextColor="{StaticResource Black}" BackgroundColor="{StaticResource White}" Margin="0,10,0,0" HeightRequest="50">
+                <Entry.Behaviors>
+                    <toolkit:MaskedBehavior Mask="(XX) XXXXX-XXXX" />
+                </Entry.Behaviors>
+            </Entry>
+            <Entry Placeholder="Endereço" Text="{Binding Address}" TextColor="{StaticResource Black}" BackgroundColor="{StaticResource White}" Margin="0,10,0,0" HeightRequest="50"/>
+            <Entry Placeholder="Polo" Text="{Binding Pole}" TextColor="{StaticResource Black}" BackgroundColor="{StaticResource White}" Margin="0,10,0,0" HeightRequest="50"/>
+            <Label Text="Função" TextColor="{StaticResource Black}" FontSize="Medium" FontAttributes="Bold" Margin="0,10,0,0"/>
+            <Picker ItemsSource="{Binding Functions}"
+                    SelectedItem="{Binding SelectedFunction}"
+                    BackgroundColor="{StaticResource White}"
+                    TextColor="{StaticResource Black}"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand" />
+            <Button Text="Salvar" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}" Command="{Binding SaveEmergencyBrigadeCommand}" Margin="0,20,0,0" Padding="15" FontSize="20" CornerRadius="30"/>
+        </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

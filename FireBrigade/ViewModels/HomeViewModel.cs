@@ -11,7 +11,4 @@ public partial class HomeViewModel : ObservableObject
 
     [RelayCommand]
     public async Task NavigateToBrigadeEmergencyPage() => await Shell.Current.GoToAsync("brigadeemergency");
-
-    [RelayCommand]
-    public async Task NavigateToListBrigadeEmergencyPage() => await Shell.Current.GoToAsync("home/listbrigadeemergency");
 }

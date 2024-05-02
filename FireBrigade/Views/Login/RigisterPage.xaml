@@ -10,69 +10,83 @@
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout
-        Spacing="20"
-        Padding="30"
-        VerticalOptions="Center"
-        HorizontalOptions="Fill">
+        <Grid>
+            <VerticalStackLayout BackgroundColor="{StaticResource BackgroundColor}">
+                <VerticalStackLayout BackgroundColor="{StaticResource Primary}" HeightRequest="200">
+                    <Label Text="Criar conta" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Padding="50">
+                    <Border BackgroundColor="{StaticResource BackgroundColorLogin}" StrokeThickness="0" StrokeShape="RoundRectangle 50" Opacity="0.9" Margin="0, -80" Padding="40" MaximumWidthRequest="600">
+                        <VerticalStackLayout Spacing="20">
+                            <Border Margin="0, 20, 0, 0" BackgroundColor="White" StrokeShape="RoundRectangle 25" HeightRequest="60" StrokeThickness="0">
+                                <Entry 
+                                    Placeholder="Email"
+                                    FontSize="20"
+                                    TextColor="Black"
+                                    Margin="20,0,0,0"
+                                    HorizontalOptions="Fill" 
+                                    Text="{Binding Email}"/>
+                            </Border>
 
-            <Label 
-            Text="Crie sua conta"
-            FontSize="24"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            />
+                            <Border Margin="0, 20, 0, 0" BackgroundColor="White" StrokeShape="RoundRectangle 25" HeightRequest="60" StrokeThickness="0">
+                                <Entry 
+                                    Placeholder="Senha"
+                                    IsPassword="True"
+                                    FontSize="20"
+                                    TextColor="Black"
+                                    Margin="20,0,0,0"
+                                    HorizontalOptions="Fill"
+                                    Text="{Binding Password}"/>
+                            </Border>
 
-            <Entry 
-            Placeholder="Email"
-            FontSize="18"
-            Margin="0,0,0,10"
-            TextColor="DarkGray"
-            PlaceholderColor="LightGray"
-            HorizontalOptions="Fill" 
-            Text="{Binding Email}"/>
+                            <Border Margin="0, 20, 0, 0" BackgroundColor="White" StrokeShape="RoundRectangle 25" HeightRequest="60" StrokeThickness="0">
+                                <Entry 
+                                    Placeholder="Confirme sua senha"
+                                    IsPassword="True"
+                                    FontSize="20"
+                                    TextColor="Black"
+                                    Margin="20,0,0,0"
+                                    HorizontalOptions="Fill"
+                                    Text="{Binding ConfirmPassword}"/>
+                            </Border>
 
-            <Entry 
-            Placeholder="Senha"
-            IsPassword="True"
-            FontSize="18"
-            Margin="0,10,0,10"
-            TextColor="DarkGray"
-            PlaceholderColor="LightGray"
-            HorizontalOptions="Fill" 
-            Text="{Binding Password}"/>
+                            <Button 
+                                Text="Criar conta"
+                                FontSize="25"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="{StaticResource White}"
+                                Padding="0, 15"
+                                CornerRadius="30"
+                                HorizontalOptions="Fill" 
+                                Command="{Binding RegisterCommand}"/>
 
-            <Entry 
-            Placeholder="Confirme sua senha"
-            IsPassword="True"
-            FontSize="18"
-            Margin="0,10,0,10"
-            TextColor="DarkGray"
-            PlaceholderColor="LightGray"
-            HorizontalOptions="Fill" 
-            Text="{Binding ConfirmPassword}"/>
+                            <Grid HorizontalOptions="Fill" VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-            <Button 
-            Text="Registrar"
-            FontSize="18"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="White"
-            Padding="10, 0"
-            CornerRadius="5"
-            HorizontalOptions="Fill" 
-            Command="{Binding RegisterCommand}"/>
+                                <BoxView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="Fill" VerticalOptions="Center" Grid.Column="0"/>
+                                <Label Text="Já possui conta" Margin="15, 0" FontSize="18" TextColor="{StaticResource Gray600}" Grid.Column="1"/>
+                                <BoxView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="Fill" VerticalOptions="Center" Grid.Column="2"/>
+                            </Grid>
 
-            <Button 
-            Text="Voltar"
-            FontSize="18"
-            BackgroundColor="{StaticResource White}"
-            TextColor="{StaticResource Black}"
-            Padding="10, 0"
-            CornerRadius="5"
-            HorizontalOptions="Fill" 
-            Command="{Binding GoToLoginCommand}"/>
+                            <Frame CornerRadius="15" BorderColor="Transparent" BackgroundColor="White" Padding="10" HeightRequest="100">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToLoginCommand}"/>
+                                </Frame.GestureRecognizers>
+                                <StackLayout Padding="15">
+                                    <Label Text="FAÇA SEU LOGIN" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Primary}"/>
+                                    <Label Text="Se você já possui uma conta, entre no app clicando aqui" FontSize="14" TextColor="{StaticResource Black}"/>
+                                </StackLayout>
+                            </Frame>
 
-
-        </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
+
 </ContentPage>

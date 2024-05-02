@@ -3,48 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FireBrigade.ViewModels"
              x:Class="FireBrigade.Views.Home.HomePage"
-             Title="HomePage">
+             Title="HomePage"
+             x:Name="HomePageVM">
 
     <ContentPage.BindingContext>
         <vm:HomeViewModel />
     </ContentPage.BindingContext>
-    
-    <VerticalStackLayout>
-        <Label Text="Bem vindo ao Brigada de Emergência" FontSize="Title" 
-               HorizontalTextAlignment="Center" />
-        <Label Text="Esta é a página inicial do aplicativo" 
-               HorizontalTextAlignment="Center" />
 
-        <Grid Padding="20" RowSpacing="10" ColumnSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <ScrollView>
+        <Grid Background="{StaticResource BackgroundColor}" RowDefinitions="500, *">
+            <VerticalStackLayout Grid.Row="0" Background="{StaticResource Primary}" Padding="59,180,59,180">
+                <Label Text="Olá," FontSize="32" />
+                <Label Text="Bem vindo ao Brigada de Emergência" FontSize="32" FontAttributes="Bold" />
+            </VerticalStackLayout>
+            <Grid Grid.Row="1" Padding="-80" HorizontalOptions="Center" VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Frame Grid.Column="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BackgroundColor="White" Padding="10" WidthRequest="300" HeightRequest="250" HasShadow="True">
+                    <StackLayout>
+                        <Image Source="personsquare.png" Margin="0, 30" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center"/>
+                        <Label Text="Ver quadro brigadista" FontSize="18" Margin="0, 50" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource Primary}"/>
+                    </StackLayout>
+                </Frame>
 
-            <StackLayout Grid.Column="0" Grid.Row="1" Spacing="10">
-                <Label Text="Cadastro de Módulos" 
-                       HorizontalTextAlignment="Center"/>
-                <Button Text="Brigada de emergência"
-                    BackgroundColor="#D32F2F"
-                    TextColor="White"
-                    CornerRadius="5"
-                    Command="{Binding NavigateToBrigadeEmergencyPageCommand}"/>
-            </StackLayout>
-
-            <StackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
-                <Label Text="Visualizar Módulos" 
-                       HorizontalTextAlignment="Center"/>
-                <Button Text="Lista de Brigada de emergência"
-                    BackgroundColor="#D32F2F"
-                    TextColor="White"
-                    CornerRadius="5" 
-                    Command="{Binding NavigateToListBrigadeEmergencyPageCommand}"/>
-            </StackLayout>
+                <Frame Grid.Column="2" CornerRadius="15" BorderColor="{StaticResource Primary}" BackgroundColor="White" Padding="10" WidthRequest="300" HeightRequest="250">
+                    <StackLayout>
+                        <Image Source="personsquare.png" Margin="0, 30" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center"/>
+                        <Label Text="Ver quadro brigadista" FontSize="18" Margin="0, 50" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource Primary}"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+            <Grid Grid.Row="2" Padding="0, 200" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Frame Grid.Column="0" CornerRadius="15" BorderColor="{StaticResource Primary}" BackgroundColor="White" Padding="10" HeightRequest="85" WidthRequest="750">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={x:Reference HomePageVM}, Path=BindingContext.NavigateToBrigadeEmergencyPageCommand}"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal" Padding="10">
+                        <Image Source="personfilladd.png" WidthRequest="48" HeightRequest="48" Margin="15, 0"/>
+                        <StackLayout>
+                            <Label Text="Cadastrar brigadista" TextColor="{StaticResource Primary}" FontSize="18" FontAttributes="Bold" VerticalOptions="Start"/>
+                            <Label Text="Faça o cadastro dos brigadista para o quadro" TextColor="{StaticResource Black}" Opacity="0.8" FontSize="14" VerticalOptions="Start"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </Grid>
         </Grid>
-    </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

@@ -43,4 +43,10 @@ public partial class ListBrigadeEmergencyViewModel : ObservableObject
     {
         EmergencyBrigadeFilter = emergencyBrigades.Where(c => c.Name.ToLower().Contains(query.ToLower())).ToList();
     });
+
+    public async Task EditEmergencyBrigade(EmergencyBrigade emergencyBrigade)
+    {
+        var emergencyBrigadeId = emergencyBrigade.Id;
+        await Shell.Current.GoToAsync($"brigadeEmergency?Id={emergencyBrigadeId}");
+    }
 }

@@ -2,12 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using FireBrigade.Domain.Entities;
 using FireBrigade.Domain.Interfaces;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 
 namespace FireBrigade.ViewModels;
 
+[QueryProperty(nameof(BrigadeEmergencyId), "brigadeEmergency")]
 public partial class BrigadeEmergencyViewModel : ObservableObject
 {
+    [ObservableProperty]
+    string brigadeEmergencyId;
+
     [ObservableProperty]
     string pole;
 
@@ -32,6 +37,8 @@ public partial class BrigadeEmergencyViewModel : ObservableObject
     [ObservableProperty]
     List<string> functions;
 
+    private bool IsEditMode => !string.IsNullOrEmpty(BrigadeEmergencyId);
+
     private readonly IEmergencyBrigadeRepository _emergencyBrigadeRepository;
 
     public BrigadeEmergencyViewModel()
@@ -40,6 +47,37 @@ public partial class BrigadeEmergencyViewModel : ObservableObject
         Functions = Enum.GetNames(typeof(Function)).ToList();
 
         SelectedFunction = Functions.FirstOrDefault();
+    }
+
+    [RelayCommand]
+    public async Task NavigateToListBrigadeEmergencyPage() => await Shell.Current.GoToAsync("home/listbrigadeemergency");
+
+    partial void OnBrigadeEmergencyIdChanged(string value)
+    {
+        if (IsEditMode)
+            LoadEmergencyBrigadeEdit(BrigadeEmergencyId);
+    }
+
+    private async Task LoadEmergencyBrigadeEdit(string brigadeEmergencyId)
+    {
+        var emergencyId = Guid.Parse(brigadeEmergencyId);
+        var emergencyBrigade = await _emergencyBrigadeRepository.GetById(emergencyId);
+
+        if (emergencyBrigade is not null)
+        {
+            PopulateEmergencyBrigade(emergencyBrigade);
+        }
+    }
+    
+    private void PopulateEmergencyBrigade(EmergencyBrigade emergencyBrigade)
+    {
+        Name = emergencyBrigade.Name;
+        Pole = emergencyBrigade.Pole;
+        Address = emergencyBrigade.Address;
+        Sector = emergencyBrigade.Sector;
+        PhoneNumber = emergencyBrigade.PhoneNumber;
+        ImagePath = emergencyBrigade.ImageProfile;
+        SelectedFunction = emergencyBrigade.Function.ToString();
     }
 
     [RelayCommand]
